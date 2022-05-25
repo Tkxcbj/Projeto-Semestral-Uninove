@@ -362,7 +362,7 @@ public class Agenda extends javax.swing.JFrame {
 
     private void tblConsultaDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblConsultaDiaMouseClicked
         if (evt.getClickCount() == 2) {
-            btnRemarcar.doClick();
+            btnRemarcar.doClick();  
         }
     }//GEN-LAST:event_tblConsultaDiaMouseClicked
 

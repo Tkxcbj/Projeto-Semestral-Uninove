@@ -19,13 +19,6 @@ public class EditarProduto extends javax.swing.JFrame {
 
     public EditarProduto() {
         initComponents();
-        nomes = new TextPrompt("Nome", txtNome);
-        nomes = new TextPrompt("Código", txtCodigo);
-        nomes = new TextPrompt("Data de Vencimento", txtVencimento);
-        nomes = new TextPrompt("Quantidade", txtQuantidade);
-        nomes = new TextPrompt("Quantidade Ideal", txtMinimo);
-        nomes = new TextPrompt("Valor", txtValor);
-        txtVencimento.setVisible(false);
     }
 
     public EditarProduto(Estoque atualizar, int codigo) {
@@ -40,6 +33,27 @@ public class EditarProduto extends javax.swing.JFrame {
         mostrarProduto(codigo);
     }
     
+    public EditarProduto(int codigo) {
+        initComponents();
+        nomes = new TextPrompt("Nome", txtNome);
+        nomes = new TextPrompt("Código", txtCodigo);
+        nomes = new TextPrompt("Data de Vencimento", txtVencimento);
+        nomes = new TextPrompt("Quantidade", txtQuantidade);
+        nomes = new TextPrompt("Quantidade Ideal", txtMinimo);
+        nomes = new TextPrompt("Valor", txtValor);
+        lblTitulo.setText("Visualizar Produto");
+        lblRs.setEnabled(false);
+        btnCadrastar.setVisible(false);
+        txtCodigo.setEnabled(false);
+        txtNome.setEnabled(false);
+        txtValor.setEnabled(false);
+        txtQuantidade.setEnabled(false);
+        txtMinimo.setEnabled(false);
+        cbPerecivel.setEnabled(false);
+        txtVencimento.setEnabled(false);
+        mostrarProduto(codigo);     
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,7 +64,7 @@ public class EditarProduto extends javax.swing.JFrame {
     private void initComponents() {
 
         txtCodigo = new javax.swing.JTextField();
-        Titulo = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         cbPerecivel = new javax.swing.JCheckBox();
         btnCadrastar = new javax.swing.JButton();
@@ -72,10 +86,10 @@ public class EditarProduto extends javax.swing.JFrame {
         txtCodigo.setEnabled(false);
         getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 190, -1));
 
-        Titulo.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
-        Titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Titulo.setText("Editar Produtos");
-        getContentPane().add(Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 20, 590, 40));
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Editar Produtos");
+        getContentPane().add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 20, 590, 40));
 
         txtNome.setBackground(new java.awt.Color(236, 236, 236));
         txtNome.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -346,11 +360,11 @@ public class EditarProduto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fundo;
-    private javax.swing.JLabel Titulo;
     private javax.swing.JButton btnCadrastar;
     private javax.swing.JCheckBox cbPerecivel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblRs;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtMinimo;
     private javax.swing.JTextField txtNome;

@@ -26,15 +26,7 @@ public class EditarConsulta extends javax.swing.JFrame {
     AgendaDao agendaDao = new AgendaDao();
     
     public EditarConsulta() {
-        //SHIFT + F6 inicia Aqui
-        initComponents();
-        nomes = new TextPrompt("Descrição", txaDescricao);
-        nomes = new TextPrompt("Cpf", txtCpf);
-        nomes = new TextPrompt("Valor", txtValor);
-        nomes = new TextPrompt("Desconto", txtDesconto);
-        lblValor.setVisible(false);
-        lblDesconto.setVisible(false);
-        mostraDentistas();       
+       initComponents();
     }
     
     public EditarConsulta(String cpf, Agendar agenda, Agenda atl){
@@ -68,7 +60,7 @@ public class EditarConsulta extends javax.swing.JFrame {
         txtDesconto = new javax.swing.JFormattedTextField();
         lblValor = new javax.swing.JLabel();
         txtValor = new javax.swing.JFormattedTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
         lblBranco = new javax.swing.JLabel();
 
@@ -178,11 +170,11 @@ public class EditarConsulta extends javax.swing.JFrame {
         getContentPane().add(txtValor);
         txtValor.setBounds(100, 270, 170, 30);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Remarcar");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(1, 20, 600, 32);
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Remarcar");
+        getContentPane().add(lblTitulo);
+        lblTitulo.setBounds(1, 2, 600, 60);
 
         lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/fundo2.png"))); // NOI18N
         getContentPane().add(lblFundo);
@@ -377,7 +369,10 @@ public class EditarConsulta extends javax.swing.JFrame {
         hora = agenda.getHora() + ":00";
         
         txtCpf.setText(cpf);
-        txtData.setText(agenda.getDateStr());       
+        txtData.setText(agenda.getDateStr());
+        if(agenda.getAnotacao() != null ){
+            txaDescricao.setText(agenda.getAnotacao());
+        }
         cbxPreferencia.setSelectedItem(agenda.getHora());        
         cbxProcedimento.setSelectedItem(agenda.getProcedimento());
         
@@ -480,12 +475,12 @@ public class EditarConsulta extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxDuracao;
     private javax.swing.JComboBox<String> cbxPreferencia;
     private javax.swing.JComboBox<String> cbxProcedimento;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBranco;
     private javax.swing.JLabel lblDesconto;
     private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblValor;
     private javax.swing.JTextArea txaDescricao;
     private javax.swing.JFormattedTextField txtCpf;

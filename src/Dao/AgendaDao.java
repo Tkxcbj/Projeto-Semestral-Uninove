@@ -84,6 +84,7 @@ public class AgendaDao {
                 consulta.setCro(rs.getString("cro"));
                 consulta.setData(rs.getDate("Data"));
                 consulta.setProcedimento(rs.getString("Procedimento"));
+                consulta.setAnotacao(rs.getString("Descrição"));
                 consulta.setIdFinaceiro(rs.getInt("idFinaceiro"));
                 hora = formato.format(rs.getTime("Horario")); //Time para String ↓
                 consulta.setHora(hora);

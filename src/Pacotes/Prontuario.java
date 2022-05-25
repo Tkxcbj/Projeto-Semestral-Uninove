@@ -1,7 +1,7 @@
 
 package Pacotes;
 
-public class Protuario {
+public class Prontuario {
     
     private String cpf;
     private String nome;
@@ -9,9 +9,9 @@ public class Protuario {
     private String dente;
     private String procedimento;
     private double valor;
-    private double desconto;
+    private String anotacao;
 
-    public Protuario() {
+    public Prontuario() {
     }
 
     public String getCpf() {
@@ -62,12 +62,12 @@ public class Protuario {
         this.valor = valor;
     }
 
-    public double getDesconto() {
-        return desconto;
+    public String getAnotacao() {
+        return anotacao;
     }
 
-    public void setDesconto(double desconto) {
-        this.desconto = desconto;
+    public void setAnotacao(String anotacao) {
+        this.anotacao = anotacao;
     }
     
     

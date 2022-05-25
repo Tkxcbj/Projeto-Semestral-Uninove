@@ -31,7 +31,7 @@ public class Estoque extends javax.swing.JFrame {
         btnInicio.setToolTipText("Tela Inicial");
         btnEstoque.setToolTipText("Estoque");
         btnFinanceiro.setToolTipText("Financeiro");
-        btnProtuario.setToolTipText("Analise de Dados");
+        btnProtuario.setToolTipText("Prontuário");
         btnPaciente.setToolTipText("Paciente");
         btnAgenda.setToolTipText("Agenda");
         nome = new TextPrompt("Digite o nome do Produto", txtProduto);
@@ -286,8 +286,8 @@ public class Estoque extends javax.swing.JFrame {
 
     private void tblEstoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEstoqueMouseClicked
         if(evt.getClickCount() == 2){
-            alterarQuatidade retirar = new alterarQuatidade(this, Integer.parseInt(String.valueOf((tableModel.getValueAt(tblEstoque.getSelectedRow(), 0)))));
-            retirar.setVisible(true);
+            EditarProduto editar = new EditarProduto(Integer.parseInt((tableModel.getValueAt(tblEstoque.getSelectedRow(), 0).toString())));
+            editar.setVisible(true);
         }
     }//GEN-LAST:event_tblEstoqueMouseClicked
 

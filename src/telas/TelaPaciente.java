@@ -272,8 +272,23 @@ public class TelaPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarPacienteActionPerformed
 
     private void tblPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPacienteMouseClicked
-        //ativar botão editar
-        if(tblPaciente.getSelectedRow() > -1){
+        tableModel = (DefaultTableModel) tblPaciente.getModel();
+        PacienteDao pacienteDao;
+        Paciente paciente;
+        
+        if(evt.getClickCount() == 2){
+            pacienteDao = new PacienteDao();
+            if(pacienteDao.conectar()){
+                paciente = pacienteDao.buscar(tableModel.getValueAt(tblPaciente.getSelectedRow(), 0).toString());
+                    EditarPacientes editar = new EditarPacientes(paciente);
+                    editar.setVisible(true);
+                    btnEditarPaciente.setEnabled(false);
+                    btnRemover.setEnabled(false);
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        }else if(tblPaciente.getSelectedRow() > -1){
             btnEditarPaciente.setEnabled(true);
             btnRemover.setEnabled(true);
         }

@@ -55,6 +55,59 @@ public class EditarPacientes extends javax.swing.JFrame {
         
         mostrarUsuario(pac);
     }
+    
+    public EditarPacientes(Paciente pac) {
+        initComponents();
+        
+        // Dados Basicos
+        tx = new TextPrompt("Nome", txtNome);
+        tx = new TextPrompt("CPF", txtCpf);
+        tx = new TextPrompt("RG", txtRg);
+        
+        // Dados para Contato
+        tx = new TextPrompt("CEP", txtCep);
+        tx = new TextPrompt("Estado", txtEstado);
+        tx = new TextPrompt("Rua", txtRua);
+        tx = new TextPrompt("Complemento*", txtComplemento);
+        tx = new TextPrompt("Número", txtNumero);
+        tx = new TextPrompt("Bairro*", txtBairro);
+        tx = new TextPrompt("Telefone", txtTelefone);
+        tx = new TextPrompt("Cidade", txtCidade);
+        tx = new TextPrompt("Email*", txtEmail);
+        
+        // Dados Adicionais
+        tx = new TextPrompt("Nome do Pai*", txtPai);
+        tx = new TextPrompt("Nome da Mãe*", txtMae);
+        tx = new TextPrompt("Nome do Conjude*", txtConjude);
+        tx = new TextPrompt("Profissão*", txtProfissao);
+        tx = new TextPrompt("Anotação*", txtAnotacao);
+        
+        //Desativar
+        cbEstadoCivil.setEnabled(false);
+        lblDadosContato.setText("Visualizar par Contato");
+        txtCidade.setEnabled(false); 
+        txtRua.setEnabled(false); 
+        txtBairro.setEnabled(false); 
+        txtNumero.setEnabled(false);
+        txtEmail.setEnabled(false); 
+        jcNascimento.setEnabled(false); 
+        lblDadosAdicionais.setText("Visualizar Dados Adicionais"); 
+        txtPai.setEnabled(false);
+        txtMae.setEnabled(false); 
+        txtProfissao.setEnabled(false); 
+        txtConjude.setEnabled(false); 
+        txtComplemento.setText("Visualizar Dados Básicos"); 
+        btnSalvar.setVisible(false); 
+        txtEstado.setEnabled(false); 
+        txtCep.setEnabled(false); 
+        txtTelefone.setEnabled(false); 
+        jLabel1.setEnabled(false);
+        
+        this.Cpf = pac.getCpf();
+        this.Rg = pac.getRg();
+        
+        mostrarUsuario(pac);
+    }
 
 
     @SuppressWarnings("unchecked")
@@ -74,7 +127,7 @@ public class EditarPacientes extends javax.swing.JFrame {
         txtNumero = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         jcNascimento = new com.toedter.calendar.JDateChooser();
-        lblDadosContato1 = new javax.swing.JLabel();
+        lblDadosAdicionais = new javax.swing.JLabel();
         txtPai = new javax.swing.JTextField();
         txtMae = new javax.swing.JTextField();
         txtProfissao = new javax.swing.JTextField();
@@ -137,10 +190,10 @@ public class EditarPacientes extends javax.swing.JFrame {
         jcNascimento.setDateFormatString("dd/MM/yyyy");
         getContentPane().add(jcNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 258, 280, 36));
 
-        lblDadosContato1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        lblDadosContato1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDadosContato1.setText("Editar Dados Adicionais");
-        getContentPane().add(lblDadosContato1, new org.netbeans.lib.awtextra.AbsoluteConstraints(652, 38, 312, 33));
+        lblDadosAdicionais.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblDadosAdicionais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDadosAdicionais.setText("Editar Dados Adicionais");
+        getContentPane().add(lblDadosAdicionais, new org.netbeans.lib.awtextra.AbsoluteConstraints(652, 38, 312, 33));
         getContentPane().add(txtPai, new org.netbeans.lib.awtextra.AbsoluteConstraints(652, 83, 145, 36));
         getContentPane().add(txtMae, new org.netbeans.lib.awtextra.AbsoluteConstraints(829, 83, 145, 36));
         getContentPane().add(txtProfissao, new org.netbeans.lib.awtextra.AbsoluteConstraints(829, 142, 145, 36));
@@ -559,9 +612,9 @@ public class EditarPacientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jcNascimento;
+    private javax.swing.JLabel lblDadosAdicionais;
     private javax.swing.JLabel lblDadosBasicos;
     private javax.swing.JLabel lblDadosContato;
-    private javax.swing.JLabel lblDadosContato1;
     private javax.swing.JTextArea txtAnotacao;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCep;

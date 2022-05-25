@@ -1,6 +1,6 @@
 package Dao;
 
-import Pacotes.Protuario;
+import Pacotes.Prontuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,6 +31,7 @@ public class ProntuarioDao {
             pst.setString(2, nome);
             pst.setString(3, contato);
             pst.setDouble(4, valor);
+            System.out.println(pst);
             return pst.executeUpdate() == 1;
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -38,13 +39,14 @@ public class ProntuarioDao {
         }
     }
     
-    public boolean salvar(Protuario prontuario){
+    public boolean salvar(Prontuario prontuario){
         try{
-            pst = conn.prepareStatement("INSERT INTO prontuariolist(cpf, Dente, Procedimento, Valor) VALUES(?,?,?,?)");
+            pst = conn.prepareStatement("INSERT INTO prontuariolist(cpf, Dente, Procedimento, anotacao,Valor) VALUES(?,?,?,?,?)");
             pst.setString(1, prontuario.getCpf());
             pst.setString(2, prontuario.getDente());
             pst.setString(3, prontuario.getProcedimento());
-            pst.setDouble(4, prontuario.getValor());
+            pst.setString(4, prontuario.getAnotacao());
+            pst.setDouble(5, prontuario.getValor());
             return pst.executeUpdate() == 1;
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -63,8 +65,8 @@ public class ProntuarioDao {
         }
     }
     
-    public Protuario buscarDadosPessoal(String cpf){
-        Protuario prontuario = new Protuario();
+    public Prontuario buscarDadosPessoal(String cpf){
+        Prontuario prontuario = new Prontuario();
         
         try{
             pst = conn.prepareStatement("SELECT cpf, nome, contato, valor FROM prontuario WHERE cpf=?;");
@@ -81,16 +83,16 @@ public class ProntuarioDao {
         }
     }
     
-    public ArrayList<Protuario> buscar(String nome){
-        ArrayList<Protuario> valor = new ArrayList<>();
-        Protuario prontuario;
+    public ArrayList<Prontuario> buscar(String nome){
+        ArrayList<Prontuario> valor = new ArrayList<>();
+        Prontuario prontuario;
         
         try{
             pst = conn.prepareStatement("SELECT cpf, nome, contato, valor FROM prontuario WHERE nome LIKE ? ORDER BY nome ASC;");
             pst.setString(1, nome + "%");
             rs = pst.executeQuery();
             while(rs.next()){
-                prontuario = new Protuario();
+                prontuario = new Prontuario();
                 prontuario.setCpf(rs.getString("cpf"));
                 prontuario.setNome(rs.getString("nome"));
                 prontuario.setContato(rs.getString("contato"));
@@ -103,15 +105,34 @@ public class ProntuarioDao {
         }
     }
     
-    public ArrayList<Protuario> lista(){
-        ArrayList<Protuario> valor = new ArrayList<>();
-        Protuario prontuario;
+    public String buscarAnotacao(String cpf, String dente, String procedimento){
+        String resposta;
+        try{
+            pst = conn.prepareStatement("SELECT anotacao FROM prontuariolist WHERE cpf=? AND dente=? AND Procedimento=?;");
+            pst.setString(1, cpf);
+            pst.setString(2, dente);
+            pst.setString(3, procedimento);           
+            rs = pst.executeQuery();
+            if(rs.next()){
+                return rs.getString("anotacao");
+            }else{
+                return null;
+            }
+        }catch(SQLException ex){
+            return null;
+        }
+    }
+    
+    
+    public ArrayList<Prontuario> lista(){
+        ArrayList<Prontuario> valor = new ArrayList<>();
+        Prontuario prontuario;
         
         try{
             pst = conn.prepareStatement("SELECT cpf, nome, contato, valor FROM prontuario ORDER BY nome ASC;");
             rs = pst.executeQuery();
             while(rs.next()){
-                prontuario = new Protuario();
+                prontuario = new Prontuario();
                 prontuario.setCpf(rs.getString("cpf"));
                 prontuario.setNome(rs.getString("nome"));
                 prontuario.setContato(rs.getString("contato"));
@@ -124,15 +145,15 @@ public class ProntuarioDao {
         }
     }
     
-    public ArrayList<Protuario> listar(String cpf){
-        ArrayList<Protuario> valor = new ArrayList<>();
-        Protuario prontuario;
+    public ArrayList<Prontuario> listar(String cpf){
+        ArrayList<Prontuario> valor = new ArrayList<>();
+        Prontuario prontuario;
         
         try{
             pst = conn.prepareStatement("SELECT * FROM prontuariolist WHERE cpf='" + cpf + "';");
             rs = pst.executeQuery();
             while(rs.next()){
-                prontuario = new Protuario();
+                prontuario = new Prontuario();
                 prontuario.setDente(rs.getString("Dente"));
                 prontuario.setProcedimento(rs.getString("Procedimento"));
                 prontuario.setValor(rs.getDouble("Valor"));
@@ -157,11 +178,12 @@ public class ProntuarioDao {
         }
     }
     
-    public void apagar(String cpf, String procedimento){
+    public void apagar(String cpf, String dente, String procedimento){
         try{
-            pst = conn.prepareStatement("DELETE FROM prontuariolist WHERE cpf=? AND Procedimento=?;");
+            pst = conn.prepareStatement("DELETE FROM prontuariolist WHERE cpf=? AND dente=? AND Procedimento=?;");
             pst.setString(1, cpf);
-            pst.setString(2, procedimento);
+            pst.setString(2, dente);
+            pst.setString(3, procedimento);
             pst.executeUpdate();
         }catch(SQLException ex){
         }

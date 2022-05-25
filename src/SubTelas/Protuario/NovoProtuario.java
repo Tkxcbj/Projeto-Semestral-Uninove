@@ -2,10 +2,10 @@ package SubTelas.Protuario;
 
 import Commun.TextPrompt;
 import Dao.ProntuarioDao;
-import Pacotes.Protuario;
+import Pacotes.Prontuario;
+import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
@@ -28,11 +28,13 @@ public class NovoProtuario extends javax.swing.JFrame {
     public NovoProtuario(TelaProtuario tela) {
         initComponents();
         this.tela = tela;
-        txp = new TextPrompt("Digite o CPF", txtCpf);
-        txp = new TextPrompt("Digite o nome", txtNome);
-        txp = new TextPrompt("Digite o Celular/Telefone", txtContato);
+        txp = new TextPrompt("Digite o CPF", txfCpf);
+        txp = new TextPrompt("Digite o NOME", txtNome);
+        txp = new TextPrompt("Digite o Celular/Telefone", txfContato);
         txp = new TextPrompt("Valor Total", txtValor);
-        txp = new TextPrompt("Digite o desconto", txtDesconto);
+        txp = new TextPrompt("Digite o Desconto", txtDesconto);
+        txp = new TextPrompt("Observação", txaObs);
+        lblRS.setVisible(false);
         btnSalvar.setEnabled(false);
     }
 
@@ -46,9 +48,10 @@ public class NovoProtuario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txaObs = new javax.swing.JTextArea();
-        txtCpf = new javax.swing.JFormattedTextField();
+        txfCpf = new javax.swing.JFormattedTextField();
         txtNome = new javax.swing.JTextField();
-        txtContato = new javax.swing.JFormattedTextField();
+        txfContato = new javax.swing.JFormattedTextField();
+        lblRS = new javax.swing.JLabel();
         txtDesconto = new javax.swing.JFormattedTextField();
         txtValor = new javax.swing.JFormattedTextField();
         txtEstimativa = new javax.swing.JFormattedTextField();
@@ -106,6 +109,7 @@ public class NovoProtuario extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Novo Prontuário");
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -116,47 +120,58 @@ public class NovoProtuario extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Novo Protuario");
+        jLabel1.setText("Novo Protuário");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 840, 60);
 
         txaObs.setColumns(20);
         txaObs.setRows(5);
-        txaObs.setText("OBS\n");
-        txaObs.setEnabled(false);
         jScrollPane1.setViewportView(txaObs);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(20, 370, 390, 140);
 
         try {
-            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
+            txfCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+        txfCpf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtCpfFocusGained(evt);
+                txfCpfFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtCpfFocusLost(evt);
+                txfCpfFocusLost(evt);
             }
         });
-        getContentPane().add(txtCpf);
-        txtCpf.setBounds(8, 82, 190, 30);
+        getContentPane().add(txfCpf);
+        txfCpf.setBounds(8, 82, 190, 30);
         getContentPane().add(txtNome);
         txtNome.setBounds(210, 82, 380, 30);
 
-        txtContato.addFocusListener(new java.awt.event.FocusAdapter() {
+        txfContato.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtContatoFocusGained(evt);
+                txfContatoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtContatoFocusLost(evt);
+                txfContatoFocusLost(evt);
             }
         });
-        getContentPane().add(txtContato);
-        txtContato.setBounds(610, 82, 210, 30);
+        getContentPane().add(txfContato);
+        txfContato.setBounds(610, 82, 210, 30);
+
+        lblRS.setText("R$:");
+        getContentPane().add(lblRS);
+        lblRS.setBounds(250, 320, 37, 40);
+
+        txtDesconto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDescontoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDescontoFocusLost(evt);
+            }
+        });
         getContentPane().add(txtDesconto);
         txtDesconto.setBounds(240, 320, 170, 40);
 
@@ -780,14 +795,6 @@ public class NovoProtuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDente38ActionPerformed
 
     private void cbxProcedimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProcedimentoActionPerformed
-        /**
-         * canal = 1000
-         * clareamento = 750
-         * aparelhamento = 250
-         * extração = 150
-         * carie = 200
-         * siso = 250
-         */
         if(cbxProcedimento.getSelectedIndex() == 1){
             txtEstimativa.setText("R$: 1000");
         }else if(cbxProcedimento.getSelectedIndex() == 2){
@@ -808,68 +815,60 @@ public class NovoProtuario extends javax.swing.JFrame {
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         tableModel = (DefaultTableModel) tblDente.getModel();
-        Protuario prontuario = new Protuario();
+        String dente;
+        double desconto;
         
-        if(txtCpf.getText().equalsIgnoreCase("")){ //Proibir de Mudar os dados pessoal
+        if(txfCpf.getText().equalsIgnoreCase("")){ //Proibir de Mudar os dados pessoal
             JOptionPane.showMessageDialog(null, "Insira um cpf valido");
             return;
         }else if(txtNome.getText().equalsIgnoreCase("")){
             JOptionPane.showMessageDialog(null, "Insira um Nome valido");
             return;
-        }else if(txtContato.getText().equalsIgnoreCase("")){
+        }else if(txfContato.getText().equalsIgnoreCase("")){
             JOptionPane.showMessageDialog(null, "Insira um contato valido");
             return;
         }
-        txtCpf.setEditable(false);
+        txfCpf.setEditable(false);
         txtNome.setEditable(false);
-        txtContato.setEditable(false);
+        txfContato.setEditable(false);
         
         if(cbxProcedimento.getSelectedItem().equals("Clareamento a Lazer") | cbxProcedimento.getSelectedItem().equals("Instalação de Aparelho")){
-                prontuario.setDente("Todos");
-            }else if(dente == null){
+                dente = "Todos";
+            }else if(this.dente == null){
                 JOptionPane.showMessageDialog(null, "Selecione um Dente antes");
+                return;
             }else{
-                prontuario.setDente(dente);
+                dente = this.dente;
             } 
       
         if(tableModel.getRowCount() > 0){ //Verificar se ja foi realizado um procedimento GERAL , ou um dente ja tem um pendente
                 for(int linha = 0; linha < tableModel.getRowCount() ; linha++){
-                    if(tableModel.getValueAt(linha, 0).toString().equalsIgnoreCase(prontuario.getDente()) && cbxProcedimento.getSelectedIndex() == 1 && cbxProcedimento.getSelectedIndex() == 2){
+                    if(tableModel.getValueAt(linha, 0).toString().equalsIgnoreCase(dente) && cbxProcedimento.getSelectedIndex() == 1 && cbxProcedimento.getSelectedIndex() == 2){
                         JOptionPane.showMessageDialog(null, "já ha um procedimento para esse dente");
                         return;
-                    }else if(tableModel.getValueAt(linha, 1).toString().equalsIgnoreCase(cbxProcedimento.getSelectedItem().toString()) && tableModel.getValueAt(linha, 0).toString().equalsIgnoreCase(prontuario.getDente())){
+                    }else if(tableModel.getValueAt(linha, 1).toString().equalsIgnoreCase(cbxProcedimento.getSelectedItem().toString()) && tableModel.getValueAt(linha, 0).toString().equalsIgnoreCase(dente)){
                         JOptionPane.showMessageDialog(null, "Esse procedimento ja foi marcado");
                         return;
                     }
                 }
-            }
-        
-        
+            }   
         if(cbxProcedimento.getSelectedIndex() != 0){
-            //Valores do paciente
-            prontuario.setCpf(txtCpf.getText().replace(".", "").replace("-", ""));
-            prontuario.setNome(txtNome.getText());
-            prontuario.setContato(txtContato.getText().replace("(", "").replace(")", "").replace("-", "")); 
-            // Valores padrão
-            prontuario.setProcedimento(cbxProcedimento.getSelectedItem().toString());
-            prontuario.setValor(Double.parseDouble(txtEstimativa.getText().substring(4)));
             if(txtDesconto.getText().equalsIgnoreCase("")){
-                prontuario.setDesconto(0);
+                desconto = 0;
             }else{
-                prontuario.setDesconto(Double.parseDouble(txtDesconto.getText()));
+                desconto = Double.parseDouble(txtDesconto.getText());
                 txtDesconto.setText("");
             }
             //Comparação e salvamento         
             tableModel.addRow(new Object[]{
-                prontuario.getDente(),
+                dente,
                 cbxProcedimento.getSelectedItem().toString(),
-                Integer.parseInt(txtEstimativa.getText().substring(4)) - prontuario.getDesconto()
+                Integer.parseInt(txtEstimativa.getText().substring(4)) - desconto
             });          
-            valor += Integer.parseInt(txtEstimativa.getText().replace("R$: ", "")) - prontuario.getDesconto();
-            txtValor.setText(String.valueOf(valor));
+            valor += Integer.parseInt(txtEstimativa.getText().replace("R$: ", "")) - desconto;
+            txtValor.setText("R$: " + valor);
             cbxProcedimento.setSelectedIndex(0);
             btnSalvar.setEnabled(true);
-            salvar(prontuario);
         }else{
             JOptionPane.showMessageDialog(null, "Selecione um procedimento valido");
         }
@@ -877,27 +876,38 @@ public class NovoProtuario extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         ProntuarioDao prontuarioDao = new ProntuarioDao();
+        Prontuario prontuario = new Prontuario();
         tableModel = (DefaultTableModel) tblDente.getModel();
-        double total = 0;
         
         int resp = JOptionPane.showConfirmDialog(null, "Deseja mesmo salvar o prontuario", "Confirmação", JOptionPane.YES_NO_CANCEL_OPTION);
         if(resp == 0 | resp == 1){
             if(prontuarioDao.conectar()){
                 if(resp == 1){
-                    prontuarioDao.apagar(txtCpf.getText().replace(".", "").replace("-", ""));
                     dispose();
                     return;
-                }
-                for(int linha = 0; linha < tableModel.getRowCount(); linha++){
-                    total += Double.parseDouble(tableModel.getValueAt(linha, 2).toString().replace("R$: ", ""));
-                }
-                if(prontuarioDao.alterarValor(total, txtCpf.getText().replace(".", "").replace("-", ""))){
+                }else if(resp == 0){
+                    prontuarioDao.salvarPaciente(txfCpf.getText().replace(".", "").replace("-", ""), txtNome.getText(), txfContato.getText().replace("(", "").replace(")", ""), Double.parseDouble(txtValor.getText().replace("R$: ", "")));
+                    for(int linha = 0; linha < tableModel.getRowCount(); linha++){
+                        prontuario.setCpf(txfCpf.getText().replace(".", "").replace("-", ""));
+                        prontuario.setDente(tableModel.getValueAt(linha, 0).toString());
+                        prontuario.setProcedimento(tableModel.getValueAt(linha, 1).toString());
+                        prontuario.setValor(Double.parseDouble(tableModel.getValueAt(linha, 2).toString()));
+                        
+                        if(txaObs.getText().equalsIgnoreCase("")){
+                            prontuario.setAnotacao(null);                           
+                        }else{
+                            prontuario.setAnotacao(txaObs.getText());
+                            txaObs.setText("");
+                        }
+                        
+                        if(!prontuarioDao.salvar(prontuario)){
+                            JOptionPane.showMessageDialog(null, "Erro ao salvar os dados do prontuario");
+                            return;
+                        }
+                    }
                     JOptionPane.showMessageDialog(null, "Prontuario salvo com sucesso");
-                    tela.mostrarDados();
                     dispose();
-                }else{
-                    JOptionPane.showMessageDialog(null, "Erro ao salvar o prontuario");
-                }
+                }              
                 prontuarioDao.desconectar();                
             }else{
                 JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -913,7 +923,7 @@ public class NovoProtuario extends javax.swing.JFrame {
         }
         if(prontuarioDao.conectar()){
             tableModel = (DefaultTableModel) tblDente.getModel();
-            prontuarioDao.apagar(txtCpf.getText(), tableModel.getValueAt(tblDente.getSelectedRow(), 1).toString());
+            prontuarioDao.apagar(txfCpf.getText().replace(".", "").replace("-", ""), tableModel.getValueAt(tblDente.getSelectedRow(), 0).toString(), tableModel.getValueAt(tblDente.getSelectedRow(), 1).toString());
             valor -= Double.parseDouble(tableModel.getValueAt(tblDente.getSelectedRow(), 2).toString().replace("R$: ", ""));
             tableModel.removeRow(tblDente.getSelectedRow());
             txtValor.setText("R$: " + valor);
@@ -930,58 +940,77 @@ public class NovoProtuario extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseReleased
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        dispose();
+        int resp = JOptionPane.showConfirmDialog(null, "Deseja mesmo sair, as informação não serão salvas!", "Alerta", JOptionPane.YES_NO_OPTION);
+        if(resp == 0){
+            dispose();
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusGained
-        if(txtCpf.getText().equals("")){
+    private void txfCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfCpfFocusGained
+        if(txfCpf.getText().equals("")){
             try {
                 MaskFormatter cpf = new MaskFormatter("###.###.###-##");
-                txtCpf.setFormatterFactory(new DefaultFormatterFactory(cpf));
+                txfCpf.setFormatterFactory(new DefaultFormatterFactory(cpf));
             } catch (ParseException ex) {
                 System.err.println(ex.getMessage());
             }        
         }
-    }//GEN-LAST:event_txtCpfFocusGained
+    }//GEN-LAST:event_txfCpfFocusGained
 
-    private void txtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusLost
-        if(txtCpf.getText().equals("") | txtCpf.getText().replace(" ", "").length() < 14){
+    private void txfCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfCpfFocusLost
+        if(txfCpf.getText().equals("") | txfCpf.getText().replace(" ", "").length() < 14){
             try {
                 MaskFormatter limpar = new MaskFormatter("");
-                txtCpf.setFormatterFactory(new DefaultFormatterFactory(limpar));
-                txtCpf.setText("");
-                txtCpf.setValue(null);
+                txfCpf.setFormatterFactory(new DefaultFormatterFactory(limpar));
+                txfCpf.setText("");
+                txfCpf.setValue(null);
             } catch (ParseException ex) {
                 System.err.println(ex.getMessage());
             }        
         }
-    }//GEN-LAST:event_txtCpfFocusLost
+    }//GEN-LAST:event_txfCpfFocusLost
 
-    private void txtContatoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContatoFocusGained
-         if(txtContato.getText().equals("")){
+    private void txfContatoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfContatoFocusGained
+         if(txfContato.getText().equals("")){
             try {
                 MaskFormatter telefone = new MaskFormatter("(##) #####-####");
-                txtContato.setFormatterFactory(new DefaultFormatterFactory(telefone));
+                txfContato.setFormatterFactory(new DefaultFormatterFactory(telefone));
             } catch (ParseException ex) {
                 System.err.println(ex.getMessage());
             }        
         }
-    }//GEN-LAST:event_txtContatoFocusGained
+    }//GEN-LAST:event_txfContatoFocusGained
 
-    private void txtContatoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtContatoFocusLost
-        if(txtContato.getText().equals("") | txtCpf.getText().replace(" ", "").length() < 14){
+    private void txfContatoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txfContatoFocusLost
+        if(txfContato.getText().equals("") | txfCpf.getText().replace(" ", "").length() < 14){
             try {
                 MaskFormatter limpar = new MaskFormatter("");
-                txtContato.setFormatterFactory(new DefaultFormatterFactory(limpar));
-                txtContato.setText("");
-                txtContato.setValue(null);
+                txfContato.setFormatterFactory(new DefaultFormatterFactory(limpar));
+                txfContato.setText("");
+                txfContato.setValue(null);
             } catch (ParseException ex) {
                 System.err.println(ex.getMessage());
             }        
         }
-    }//GEN-LAST:event_txtContatoFocusLost
+    }//GEN-LAST:event_txfContatoFocusLost
+
+    private void txtDescontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusGained
+        if(txtDesconto.getText().equalsIgnoreCase("")){
+            Insets margem = new Insets(2, 25, 2, 2);
+            lblRS.setVisible(true);
+            txtDesconto.setMargin(margem);
+        }
+    }//GEN-LAST:event_txtDescontoFocusGained
+
+    private void txtDescontoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDescontoFocusLost
+        if(txtDesconto.getText().equalsIgnoreCase("")){
+            Insets margem = new Insets(2, 2, 2, 2);
+            lblRS.setVisible(false);
+            txtDesconto.setMargin(margem);
+        }
+    }//GEN-LAST:event_txtDescontoFocusLost
   
-    private void salvar(Protuario prontuario){
+    private void salvar(Prontuario prontuario){
         ProntuarioDao prontuarioDao = new ProntuarioDao();
         
         if(prontuarioDao.conectar()){
@@ -1077,11 +1106,12 @@ public class NovoProtuario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblRS;
     private javax.swing.JMenuItem mnuRemover;
     private javax.swing.JTable tblDente;
     private javax.swing.JTextArea txaObs;
-    private javax.swing.JFormattedTextField txtContato;
-    private javax.swing.JFormattedTextField txtCpf;
+    private javax.swing.JFormattedTextField txfContato;
+    private javax.swing.JFormattedTextField txfCpf;
     private javax.swing.JFormattedTextField txtDesconto;
     private javax.swing.JFormattedTextField txtEstimativa;
     private javax.swing.JTextField txtNome;

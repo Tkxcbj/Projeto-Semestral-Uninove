@@ -1,7 +1,7 @@
 package telas;
 import Commun.TextPrompt;
 import Dao.ProntuarioDao;
-import Pacotes.Protuario;
+import Pacotes.Prontuario;
 import SubTelas.Protuario.EditarProtuario;
 import SubTelas.Protuario.NovoProtuario;
 import java.awt.Color;
@@ -283,7 +283,10 @@ public class TelaProtuario extends javax.swing.JFrame {
 
     private void tblProtuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProtuarioMouseClicked
         tableModel = (DefaultTableModel) tblProtuario.getModel();
-        if(tblProtuario.getSelectedRow() > -1){
+        if(evt.getClickCount() == 2){
+            EditarProtuario editar = new EditarProtuario(tableModel.getValueAt(tblProtuario.getSelectedRow(), 0).toString());
+            editar.setVisible(true);
+        }else if(tblProtuario.getSelectedRow() > -1){
             btnEditar.setVisible(true);
             btnExcluir.setVisible(true);
         }
@@ -316,7 +319,7 @@ public class TelaProtuario extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         prontuarioDao = new ProntuarioDao();
-        ArrayList<Protuario> prontuario;
+        ArrayList<Prontuario> prontuario;
         
         if(txtPesquisar.getText().equals("")){
             mostrarDados();
@@ -329,7 +332,7 @@ public class TelaProtuario extends javax.swing.JFrame {
                 }
                 tableModel = (DefaultTableModel) tblProtuario.getModel();
                 tableModel.setNumRows(0);
-                for(Protuario pront : prontuario){
+                for(Prontuario pront : prontuario){
                     tableModel.addRow(new Object[]{
                         pront.getCpf(),
                         pront.getNome(),
@@ -352,7 +355,7 @@ public class TelaProtuario extends javax.swing.JFrame {
 
     public final void mostrarDados(){
         prontuarioDao = new ProntuarioDao();
-        ArrayList<Protuario> prontuario;
+        ArrayList<Prontuario> prontuario;
         tableModel = tableModel = (DefaultTableModel) tblProtuario.getModel();
         
         if(prontuarioDao.conectar()){
@@ -361,7 +364,7 @@ public class TelaProtuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Não ha prontuario para ser exibidos");
             }else{
                 tableModel.setNumRows(0);
-                for(Protuario valor : prontuario)
+                for(Prontuario valor : prontuario)
                     tableModel.addRow(new Object[]{
                         valor.getCpf(),
                         valor.getNome(),
