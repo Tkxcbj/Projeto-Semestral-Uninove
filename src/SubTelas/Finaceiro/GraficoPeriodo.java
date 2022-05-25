@@ -74,10 +74,9 @@ public class GraficoPeriodo extends JFrame {
         
         try {
             //Crio um arquivo para salvar o grafico, com a url, a largura e a altura (em px).
-           ChartUtilities.saveChartAsPNG(new File("src\\view\\periodos.png"), grafico, 400, 300); //Cleyton
-           //ChartUtilities.saveChartAsPNG(new File("C:\\Users\\rhamine.ferreira\\Documents\\Fax\\periodos.png"), grafico, 400, 300); //Rhamine
+           ChartUtilities.saveChartAsPNG(new File("src\\view\\periodos.png"), grafico, 400, 300);
         } catch (IOException e) {
-            System.err.println("Problem occurred creating chart.");
+            System.err.println("Erro ao criar o grafico");
         }
         dispose();
     }

@@ -6,6 +6,7 @@ import Dao.PacienteDao;
 import Pacotes.Paciente; 
 import SubTelas.Paciente.*;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -118,6 +119,11 @@ public class TelaPaciente extends javax.swing.JFrame {
         getContentPane().add(btnProntuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 483, 108, 108));
 
         txtPesquisa.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(282, 28, 400, 50));
 
         btnBuscarPaciente.setText("Buscar");
@@ -202,19 +208,19 @@ public class TelaPaciente extends javax.swing.JFrame {
         imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/fundoPricipal.jpg"))); // NOI18N
         getContentPane().add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 720));
 
-        setSize(new java.awt.Dimension(1214, 757));
+        setSize(new java.awt.Dimension(1216, 759));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        TelaInicial t = new TelaInicial(cargo);
-        t.setVisible(true);
+        TelaInicial inicial = new TelaInicial(cargo);
+        inicial.setVisible(true);
             dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstoqueActionPerformed
-        Estoque e = new Estoque(cargo);
-        e.setVisible(true);
+        Estoque estoque = new Estoque(cargo);
+        estoque.setVisible(true);
             dispose();
     }//GEN-LAST:event_btnEstoqueActionPerformed
 
@@ -240,31 +246,31 @@ public class TelaPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
-        Agenda a = new Agenda(cargo);
-        a.setVisible(true);
+        Agenda agenda = new Agenda(cargo);
+        agenda.setVisible(true);
             dispose();
     }//GEN-LAST:event_btnAgendaActionPerformed
 
     private void btnAdicionarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarPacienteActionPerformed
-        CadastroPacientes p = new CadastroPacientes(this);
-        p.setVisible(true);       
+        CadastroPacientes paciente = new CadastroPacientes(this);
+        paciente.setVisible(true);       
         
     }//GEN-LAST:event_btnAdicionarPacienteActionPerformed
 
     private void btnEditarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPacienteActionPerformed
         PacienteDao pacienteDao = new PacienteDao();
-        Paciente pac;
+        Paciente paciente;
         
         if(tblPaciente.getSelectedRow() > -1){
             if(pacienteDao.conectar()){    
-                pac = pacienteDao.buscar(tableModel.getValueAt(tblPaciente.getSelectedRow(),0).toString());
-                    EditarPacientes ep = new EditarPacientes(pac, this);
+                paciente = pacienteDao.buscar(tableModel.getValueAt(tblPaciente.getSelectedRow(),0).toString());
+                    EditarPacientes ep = new EditarPacientes(paciente, this);
                     ep.setVisible(true);
                     btnEditarPaciente.setEnabled(false);
                     btnRemover.setEnabled(false);
 
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione paciente antes");
@@ -286,7 +292,7 @@ public class TelaPaciente extends javax.swing.JFrame {
                     btnRemover.setEnabled(false);
 
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }else if(tblPaciente.getSelectedRow() > -1){
             btnEditarPaciente.setEnabled(true);
@@ -297,7 +303,6 @@ public class TelaPaciente extends javax.swing.JFrame {
 
         
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        // TODO add your handling code here:
          //Importando as classe
         PacienteDao pacienteDao = new PacienteDao();
         EnderecoDao enderecoDao = new EnderecoDao();
@@ -325,21 +330,24 @@ public class TelaPaciente extends javax.swing.JFrame {
                     }
                 //Erro de conexão com o banco de dados
                 }else{
-                    JOptionPane.showMessageDialog(null, "Erro ao conectar a tabela endereço, tente reniciar o programa", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Erro ao conectar a tabela paciente, tente reniciar o programa", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
             
-        }else{
-            //Fazer nada
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPacienteActionPerformed
-        // TODO add your handling code here:
         mostrar(false);
     }//GEN-LAST:event_btnBuscarPacienteActionPerformed
+
+    private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnBuscarPaciente.doClick();
+        }
+    }//GEN-LAST:event_txtPesquisaKeyPressed
 
     
     public final void mostrar(boolean tudo){       
@@ -372,11 +380,11 @@ public class TelaPaciente extends javax.swing.JFrame {
                     });
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Erro ao buscar Pacientes, tente reniciar o programa", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
             pacienteDao.desconectar();
         }else{
-            JOptionPane.showMessageDialog(null, "Erro ao buscar paciente, tente reniciar o programa", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     

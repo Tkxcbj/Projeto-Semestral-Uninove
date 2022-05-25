@@ -156,7 +156,7 @@ public class TelaInicial extends javax.swing.JFrame {
         getContentPane().add(imgFundo);
         imgFundo.setBounds(0, 0, 1200, 720);
 
-        setSize(new java.awt.Dimension(1214, 757));
+        setSize(new java.awt.Dimension(1216, 759));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

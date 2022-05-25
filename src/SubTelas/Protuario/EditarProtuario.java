@@ -28,6 +28,7 @@ public class EditarProtuario extends javax.swing.JFrame {
 
     public EditarProtuario(String cpf){
         initComponents();
+        this.setTitle("Visualizar Prontuário");
         lblTitulo.setText("Visualizar Prontuário");
         txp = new TextPrompt("Digite o desconto", txtDesconto);
         txp = new TextPrompt("Observação", txaObs);
@@ -110,11 +111,6 @@ public class EditarProtuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editar Prontuário");
         setResizable(false);
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                formMouseReleased(evt);
-            }
-        });
         getContentPane().setLayout(null);
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
@@ -756,7 +752,7 @@ public class EditarProtuario extends javax.swing.JFrame {
                 }              
                 prontuarioDao.desconectar();                
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);;
             }
         }      
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -775,15 +771,9 @@ public class EditarProtuario extends javax.swing.JFrame {
             txtValor.setText("R$: " + valor);
             prontuarioDao.desconectar();
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_mnuRemoverActionPerformed
-
-    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        if(evt.isPopupTrigger()){
-            mostraPop(evt);
-        }
-    }//GEN-LAST:event_formMouseReleased
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         dispose();
@@ -922,6 +912,12 @@ public class EditarProtuario extends javax.swing.JFrame {
         tableModel = (DefaultTableModel) tblDente.getModel();
         String observacao;
         
+        if(evt.getButton() == MouseEvent.BUTTON3){
+            if(tblDente.getSelectedRow() > -1){
+                jPopupMenu2.show(tblDente, evt.getX(), evt.getY());
+            }
+        }
+        
         if(prontuarioDao.conectar()){
             observacao = prontuarioDao.buscarAnotacao(txfCpf.getText().replace(".", "").replace("-", ""), tableModel.getValueAt(tblDente.getSelectedRow(), 0).toString(), tableModel.getValueAt(tblDente.getSelectedRow(), 1).toString());
             if(observacao != null){
@@ -930,7 +926,7 @@ public class EditarProtuario extends javax.swing.JFrame {
                 txaObs.setText("");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_tblDenteMouseClicked
   
@@ -995,12 +991,9 @@ public class EditarProtuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
+   
     
-    private void mostraPop(MouseEvent evt){
-        jPopupMenu2.show(this, evt.getX(), evt.getY());
-    }
-    
-    public static void main(String args[]) {
+    public static void editar(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

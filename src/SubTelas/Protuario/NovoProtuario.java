@@ -111,11 +111,6 @@ public class NovoProtuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Novo Prontuário");
         setResizable(false);
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                formMouseReleased(evt);
-            }
-        });
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Historic", 1, 24)); // NOI18N
@@ -206,6 +201,11 @@ public class NovoProtuario extends javax.swing.JFrame {
         tblDente.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblDente.getTableHeader().setResizingAllowed(false);
         tblDente.getTableHeader().setReorderingAllowed(false);
+        tblDente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDenteMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblDente);
         if (tblDente.getColumnModel().getColumnCount() > 0) {
             tblDente.getColumnModel().getColumn(0).setResizable(false);
@@ -910,13 +910,13 @@ public class NovoProtuario extends javax.swing.JFrame {
                 }              
                 prontuarioDao.desconectar();                
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }      
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void mnuRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuRemoverActionPerformed
-         ProntuarioDao prontuarioDao = new ProntuarioDao();
+        ProntuarioDao prontuarioDao = new ProntuarioDao();
         
         if(tblDente.getSelectedRow() == -1){
             return;
@@ -929,15 +929,9 @@ public class NovoProtuario extends javax.swing.JFrame {
             txtValor.setText("R$: " + valor);
             prontuarioDao.desconectar();
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_mnuRemoverActionPerformed
-
-    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        if(evt.isPopupTrigger()){
-            mostraPop(evt);
-        }
-    }//GEN-LAST:event_formMouseReleased
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         int resp = JOptionPane.showConfirmDialog(null, "Deseja mesmo sair, as informação não serão salvas!", "Alerta", JOptionPane.YES_NO_OPTION);
@@ -1009,6 +1003,14 @@ public class NovoProtuario extends javax.swing.JFrame {
             txtDesconto.setMargin(margem);
         }
     }//GEN-LAST:event_txtDescontoFocusLost
+
+    private void tblDenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDenteMouseClicked
+        if(evt.getButton() == MouseEvent.BUTTON3){
+            if(tblDente.getSelectedRow() > -1){
+                jPopupMenu2.show(tblDente, evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_tblDenteMouseClicked
   
     private void salvar(Prontuario prontuario){
         ProntuarioDao prontuarioDao = new ProntuarioDao();
@@ -1021,15 +1023,11 @@ public class NovoProtuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Não foi possivel adicionar esse procedimento");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
-    private void mostraPop(MouseEvent evt){
-        jPopupMenu2.show(this, evt.getX(), evt.getY());
-    }
-    
-    public static void prontuario(String args[]) {
+    public static void novo(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

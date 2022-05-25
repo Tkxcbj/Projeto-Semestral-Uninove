@@ -28,7 +28,7 @@ public class TelaProtuario extends javax.swing.JFrame {
         btnInicio.setToolTipText("Tela Inicial");
         btnEstoque.setToolTipText("Estoque");
         btnFinanceiro.setToolTipText("Financeiro");
-        btnProntuario.setToolTipText("Analise de Dados");
+        btnProntuario.setToolTipText("Prontuário");
         btnPaciente.setToolTipText("Paciente");
         btnAgenda.setToolTipText("Agenda");
         txp = new TextPrompt("Digite o nome", txtPesquisar);
@@ -233,26 +233,26 @@ public class TelaProtuario extends javax.swing.JFrame {
         getContentPane().add(imgFundo);
         imgFundo.setBounds(0, 0, 1200, 720);
 
-        setSize(new java.awt.Dimension(1214, 757));
+        setSize(new java.awt.Dimension(1216, 759));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        TelaInicial t = new TelaInicial(cargo);
-        t.setVisible(true);
-            dispose();
+        TelaInicial inicial = new TelaInicial(cargo);
+        inicial.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstoqueActionPerformed
-        Estoque e = new Estoque(cargo);
-        e.setVisible(true);
-            dispose();
+        Estoque estoque = new Estoque(cargo);
+        estoque.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnEstoqueActionPerformed
 
     private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
-        TelaFinanceiro f = new TelaFinanceiro(cargo);
-        f.setVisible(true);
-            dispose();
+        TelaFinanceiro financeiro = new TelaFinanceiro(cargo);
+        financeiro.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnFinanceiroActionPerformed
 
     private void btnProntuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProntuarioActionPerformed
@@ -265,15 +265,15 @@ public class TelaProtuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProntuarioActionPerformed
 
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        TelaPaciente p = new TelaPaciente(cargo);
-        p.setVisible(true);
-            dispose();
+        TelaPaciente paciente = new TelaPaciente(cargo);
+        paciente.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
-        Agenda a = new Agenda(cargo);
-        a.setVisible(true);
-            dispose();
+        Agenda agenda = new Agenda(cargo);
+        agenda.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnAgendaActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -312,7 +312,7 @@ public class TelaProtuario extends javax.swing.JFrame {
                 btnEditar.setVisible(false);
                 prontuarioDao.desconectar();
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -342,7 +342,7 @@ public class TelaProtuario extends javax.swing.JFrame {
                 }
                 prontuarioDao.desconectar();
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
@@ -374,7 +374,7 @@ public class TelaProtuario extends javax.swing.JFrame {
             }
             prontuarioDao.desconectar();
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     

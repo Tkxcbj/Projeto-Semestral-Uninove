@@ -355,14 +355,12 @@ public class CadastroPacientes extends javax.swing.JFrame {
 
             }
         } catch (ParseException ex) {
-
         }
 
 
     }//GEN-LAST:event_txtCpfFocusLost
 
     private void txtRgFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRgFocusGained
-        // TODO add your handling code here:
         if (txtRg.getText().replace(" ", "").length() < 12) {
             try {
                 MaskFormatter rg = new MaskFormatter("##.###.###-#");
@@ -372,7 +370,6 @@ public class CadastroPacientes extends javax.swing.JFrame {
                 System.err.println(ex.getMessage());
             }
         }
-
     }//GEN-LAST:event_txtRgFocusGained
 
     private void txtRgFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRgFocusLost
@@ -383,12 +380,10 @@ public class CadastroPacientes extends javax.swing.JFrame {
                 txtRg.setFormatterFactory(new DefaultFormatterFactory(limpar));
             }
         } catch (ParseException ex) {
-
         }
     }//GEN-LAST:event_txtRgFocusLost
 
     private void txtCepFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCepFocusGained
-        // TODO add your handling code here:
         try {
             MaskFormatter cep = new MaskFormatter("#####-###");
             txtCep.setFormatterFactory(new DefaultFormatterFactory(cep));
@@ -398,7 +393,6 @@ public class CadastroPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCepFocusGained
 
     private void txtCepFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCepFocusLost
-        // TODO add your handling code here:
         MaskFormatter limpar;
         try {
             limpar = new MaskFormatter("");
@@ -414,7 +408,6 @@ public class CadastroPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCepFocusLost
 
     private void txtTelefoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefoneFocusGained
-        // TODO add your handling code here:
         try {
             MaskFormatter Tel = new MaskFormatter("(##)#####-####");
             txtTelefone.setFormatterFactory(new DefaultFormatterFactory(Tel));
@@ -424,8 +417,7 @@ public class CadastroPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefoneFocusGained
 
     private void txtTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefoneFocusLost
-        // TODO add your handling code here:
-        MaskFormatter limpar;
+       MaskFormatter limpar;
         try {
             limpar = new MaskFormatter("");
 
@@ -440,8 +432,7 @@ public class CadastroPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefoneFocusLost
 
     private void txtEstadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEstadoFocusGained
-        // TODO add your handling code here:
-        try {
+       try {
             MaskFormatter est = new MaskFormatter("(UU)");
             txtEstado.setFormatterFactory(new DefaultFormatterFactory(est));
         } catch (ParseException ex) {
@@ -450,7 +441,6 @@ public class CadastroPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEstadoFocusGained
 
     private void txtEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEstadoFocusLost
-        // TODO add your handling code here:
         MaskFormatter limpar;
         try {
             limpar = new MaskFormatter("");
@@ -498,11 +488,11 @@ public class CadastroPacientes extends javax.swing.JFrame {
                 }
                 enderecoDao.desconectar();
             } else {
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados de Endereço");
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
             cadastroDao.desconectar();
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados Paciente");
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }

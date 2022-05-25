@@ -189,6 +189,18 @@ public class AgendaDao {
         }
     }
     
+    public boolean apagar(String data, String cpf){
+        String dataFormatada = data.substring(6) + "-" + data.substring(3, 5) + "-" + data.substring(0, 2);
+        try{
+            pst = conn.prepareStatement("DELETE FROM `agenda` WHERE `data`=? AND cpfPaciente=?");
+            pst.setString(1, dataFormatada);
+            pst.setString(2, cpf);
+            return pst.executeUpdate() == 1;
+        }catch(SQLException ex){
+            return false;
+        }
+    }
+    
     public int apagarAntigos(){
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Date diaAtual = new Date();

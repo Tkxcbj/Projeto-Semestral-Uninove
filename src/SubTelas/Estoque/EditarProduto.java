@@ -41,6 +41,7 @@ public class EditarProduto extends javax.swing.JFrame {
         nomes = new TextPrompt("Quantidade", txtQuantidade);
         nomes = new TextPrompt("Quantidade Ideal", txtMinimo);
         nomes = new TextPrompt("Valor", txtValor);
+        this.setTitle("Visualizar Produto");
         lblTitulo.setText("Visualizar Produto");
         lblRs.setEnabled(false);
         btnCadrastar.setVisible(false);

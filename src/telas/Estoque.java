@@ -6,6 +6,7 @@ import java.awt.Color;
 import SubTelas.Estoque.*;
 import java.text.DateFormat;
 import Commun.TextPrompt;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ public class Estoque extends javax.swing.JFrame {
     String cargo;
     TextPrompt nome;
     DefaultTableModel tableModel;
-    EstoqueDao produtoDao = new EstoqueDao();
 
     public Estoque() {
         initComponents();
@@ -129,6 +129,11 @@ public class Estoque extends javax.swing.JFrame {
         btnProtuario.setBounds(6, 483, 108, 108);
 
         txtProduto.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtProdutoKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtProduto);
         txtProduto.setBounds(322, 40, 400, 50);
 
@@ -227,7 +232,7 @@ public class Estoque extends javax.swing.JFrame {
         getContentPane().add(imgFundo);
         imgFundo.setBounds(0, 0, 1200, 720);
 
-        setSize(new java.awt.Dimension(1214, 727));
+        setSize(new java.awt.Dimension(1216, 759));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -247,26 +252,26 @@ public class Estoque extends javax.swing.JFrame {
   }//GEN-LAST:event_btnEstoqueActionPerformed
 
     private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
-        TelaFinanceiro f = new TelaFinanceiro(cargo);
-        f.setVisible(true);
+        TelaFinanceiro financeiro = new TelaFinanceiro(cargo);
+        financeiro.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnFinanceiroActionPerformed
 
     private void btnProtuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProtuarioActionPerformed
-        TelaProtuario d = new TelaProtuario(cargo);
-        d.setVisible(true);
+        TelaProtuario prontuario = new TelaProtuario(cargo);
+        prontuario.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnProtuarioActionPerformed
 
     private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
-        TelaPaciente p = new TelaPaciente(cargo);
-        p.setVisible(true);
+        TelaPaciente paciente = new TelaPaciente(cargo);
+        paciente.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPacienteActionPerformed
 
     private void btnAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendaActionPerformed
-        Agenda a = new Agenda(cargo);
-        a.setVisible(true);
+        Agenda agenda = new Agenda(cargo);
+        agenda.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnAgendaActionPerformed
 
@@ -310,12 +315,20 @@ public class Estoque extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void txtProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProdutoKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnPesquisaEstoque.doClick();
+        }
+    }//GEN-LAST:event_txtProdutoKeyPressed
+
     public void atualizar() {
         ArrayList<Produto> produto;
+        EstoqueDao estoqueDao;
         
        if(!txtProduto.getText().equalsIgnoreCase("")){
-            if(produtoDao.conectar()){
-                produto = produtoDao.buscar(txtProduto.getText());
+           estoqueDao = new EstoqueDao();
+            if(estoqueDao.conectar()){
+                produto = estoqueDao.buscar(txtProduto.getText());
             if(produto != null){
                 tableModel.setRowCount(0);
                 cbxModoPesquisa.setSelectedIndex(0);
@@ -331,7 +344,7 @@ public class Estoque extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Nenhum produto foi encotrado");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
        }else{
            tableModel.setNumRows(0);
@@ -340,12 +353,13 @@ public class Estoque extends javax.swing.JFrame {
     }
 
     private void inicio() {
+        EstoqueDao estoqueDao = new EstoqueDao();
         String mostrarData;
         ArrayList<Produto> produto;
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-        if (produtoDao.conectar()) {
-            produto = produtoDao.listar();
+        if (estoqueDao.conectar()) {
+            produto = estoqueDao.listar();
             if (produto != null) {
                 for (Produto prod : produto) {
                     try {
@@ -369,21 +383,21 @@ public class Estoque extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Não foi encotrado nenhum produto", "Alerta", JOptionPane.PLAIN_MESSAGE);
             }
-            produtoDao.desconectar();
+            estoqueDao.desconectar();
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados");
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void vencidos(){
-        //Se isso ainda tiver aqui, isso vai mudar ta tudo baguçado por que eu estava aprendendo e testando mas vai ser melhorado
+        EstoqueDao estoqueDao = new EstoqueDao();
         String data;
         ArrayList<Produto> produto;
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date dataAtual = new Date();
 
-        if (produtoDao.conectar()) {
-            produto = produtoDao.listar();
+        if (estoqueDao.conectar()) {
+            produto = estoqueDao.listar();
             if (produto != null) {
                 tableModel.setNumRows(0);
                 for (Produto prod : produto) {
@@ -414,17 +428,18 @@ public class Estoque extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Nenhum Produto Vencido foi encotrado");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao bnaco de dados");
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
     private void minimo(){
+        EstoqueDao estoqueDao = new EstoqueDao();
         String mostrarData;
         ArrayList<Produto> produto;
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-        if (produtoDao.conectar()) {
-            produto = produtoDao.listar();
+        if (estoqueDao.conectar()) {
+            produto = estoqueDao.listar();
             if (produto != null) {
                 tableModel.setRowCount(0);
                 for (Produto prod : produto) {
@@ -450,15 +465,15 @@ public class Estoque extends javax.swing.JFrame {
                 if(tableModel.getRowCount() == 0){
                     inicio();
                     cbxModoPesquisa.setSelectedItem("Tudo");
-                    JOptionPane.showMessageDialog(null, "Não ha produtos abaixo do minimo");                    
+                    JOptionPane.showMessageDialog(null, "Não ha produtos abaixo do mínimo");                    
                 }
 
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao buscar os valores");
             }
-            produtoDao.desconectar();
+            estoqueDao.desconectar();
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     

@@ -48,7 +48,7 @@ public class EditarPacientes extends javax.swing.JFrame {
         tx = new TextPrompt("Nome da Mãe*", txtMae);
         tx = new TextPrompt("Nome do Conjude*", txtConjude);
         tx = new TextPrompt("Profissão*", txtProfissao);
-        tx = new TextPrompt("Anotação*", txtAnotacao);
+        tx = new TextPrompt("Anotação*", txaAnotacao);
         
         this.Cpf = pac.getCpf();
         this.Rg = pac.getRg();
@@ -80,35 +80,38 @@ public class EditarPacientes extends javax.swing.JFrame {
         tx = new TextPrompt("Nome da Mãe*", txtMae);
         tx = new TextPrompt("Nome do Conjude*", txtConjude);
         tx = new TextPrompt("Profissão*", txtProfissao);
-        tx = new TextPrompt("Anotação*", txtAnotacao);
+        tx = new TextPrompt("Anotação*", txaAnotacao);
         
         //Desativar
         cbEstadoCivil.setEnabled(false);
-        lblDadosContato.setText("Visualizar par Contato");
-        txtCidade.setEnabled(false); 
+        this.setTitle("Visualizar Paciente");
+        lblDadosContato.setText("Visualizar para Contato");       
+        txtNome.setEnabled(false);
+        txtComplemento.setEnabled(false);
+        txaAnotacao.setEnabled(false);
         txtRua.setEnabled(false); 
         txtBairro.setEnabled(false); 
         txtNumero.setEnabled(false);
+        txtCidade.setEnabled(false);
         txtEmail.setEnabled(false); 
         jcNascimento.setEnabled(false); 
         lblDadosAdicionais.setText("Visualizar Dados Adicionais"); 
+        lblDadosBasicos.setText("Visualizar Dados Básicos"); 
         txtPai.setEnabled(false);
         txtMae.setEnabled(false); 
         txtProfissao.setEnabled(false); 
         txtConjude.setEnabled(false); 
-        txtComplemento.setText("Visualizar Dados Básicos"); 
         btnSalvar.setVisible(false); 
         txtEstado.setEnabled(false); 
         txtCep.setEnabled(false); 
-        txtTelefone.setEnabled(false); 
-        jLabel1.setEnabled(false);
+        txtTelefone.setEnabled(false);
+        cbGenero.setEnabled(false);
         
         this.Cpf = pac.getCpf();
         this.Rg = pac.getRg();
         
         mostrarUsuario(pac);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -135,11 +138,11 @@ public class EditarPacientes extends javax.swing.JFrame {
         txtComplemento = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtAnotacao = new javax.swing.JTextArea();
+        txaAnotacao = new javax.swing.JTextArea();
         txtEstado = new javax.swing.JFormattedTextField();
         txtCep = new javax.swing.JFormattedTextField();
         txtTelefone = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
+        imgFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editar Paciente");
@@ -153,9 +156,11 @@ public class EditarPacientes extends javax.swing.JFrame {
         getContentPane().add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 280, 36));
 
         txtCpf.setEditable(false);
+        txtCpf.setEnabled(false);
         getContentPane().add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 144, 280, 36));
 
         txtRg.setEditable(false);
+        txtRg.setEnabled(false);
         getContentPane().add(txtRg, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 280, 36));
 
         cbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gênero", "Masculino", "Feminino", "Outros" }));
@@ -175,11 +180,6 @@ public class EditarPacientes extends javax.swing.JFrame {
         getContentPane().add(txtBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 130, 36));
         getContentPane().add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(342, 200, 130, 36));
 
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 Pressed(evt);
@@ -209,9 +209,9 @@ public class EditarPacientes extends javax.swing.JFrame {
         });
         getContentPane().add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(804, 358, 170, 50));
 
-        txtAnotacao.setColumns(20);
-        txtAnotacao.setRows(5);
-        jScrollPane1.setViewportView(txtAnotacao);
+        txaAnotacao.setColumns(20);
+        txaAnotacao.setRows(5);
+        jScrollPane1.setViewportView(txaAnotacao);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 196, 319, 140));
 
@@ -250,8 +250,8 @@ public class EditarPacientes extends javax.swing.JFrame {
         });
         getContentPane().add(txtTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 256, 130, 36));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/fundoPaciente.jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 470));
+        imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/fundoPaciente.jpg"))); // NOI18N
+        getContentPane().add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 470));
 
         pack();
         setLocationRelativeTo(null);
@@ -262,7 +262,6 @@ public class EditarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_Pressed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
         Endereco e = new Endereco();
         Paciente p = new Paciente();
         String dataFormatada = "null";
@@ -298,7 +297,7 @@ public class EditarPacientes extends javax.swing.JFrame {
         p.setMae(isEmpty(txtMae.getText()));
         p.setConjude(isEmpty(txtConjude.getText()));
         p.setProfissao(isEmpty(txtProfissao.getText()));
-        p.setAnotacao(isEmpty(txtAnotacao.getText()));
+        p.setAnotacao(isEmpty(txaAnotacao.getText()));
         
         try{
         if(jcNascimento.getDate() == null){
@@ -380,7 +379,7 @@ public class EditarPacientes extends javax.swing.JFrame {
         if(txtProfissao.equals("")){
             p.setProfissao("null");
         }
-        if(txtAnotacao.equals("")){
+        if(txaAnotacao.equals("")){
             p.setAnotacao("null");
         }
         
@@ -389,12 +388,7 @@ public class EditarPacientes extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
-
     private void txtEstadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEstadoFocusGained
-        // TODO add your handling code here:
         try {
             MaskFormatter est = new MaskFormatter("(UU)");
             txtEstado.setFormatterFactory(new DefaultFormatterFactory(est));
@@ -404,7 +398,6 @@ public class EditarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEstadoFocusGained
 
     private void txtEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEstadoFocusLost
-        // TODO add your handling code here:
         MaskFormatter limpar;
         try {
             limpar = new MaskFormatter("");
@@ -420,7 +413,6 @@ public class EditarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEstadoFocusLost
 
     private void txtCepFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCepFocusGained
-        // TODO add your handling code here:
         try {
             MaskFormatter cep = new MaskFormatter("#####-###");
             txtCep.setFormatterFactory(new DefaultFormatterFactory(cep));
@@ -430,7 +422,6 @@ public class EditarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCepFocusGained
 
     private void txtCepFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCepFocusLost
-        // TODO add your handling code here:
         MaskFormatter limpar;
         try {
             limpar = new MaskFormatter("");
@@ -446,7 +437,6 @@ public class EditarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCepFocusLost
 
     private void txtTelefoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefoneFocusGained
-        // TODO add your handling code here:
         try {
             MaskFormatter Tel = new MaskFormatter("(##)#####-####");
             txtTelefone.setFormatterFactory(new DefaultFormatterFactory(Tel));
@@ -456,7 +446,6 @@ public class EditarPacientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefoneFocusGained
 
     private void txtTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefoneFocusLost
-        // TODO add your handling code here:
         MaskFormatter limpar;
         try {
             limpar = new MaskFormatter("");
@@ -507,7 +496,7 @@ public class EditarPacientes extends javax.swing.JFrame {
             txtMae.setText(isEmpty(paciente.getMae()));
             txtConjude.setText(isEmpty(paciente.getConjude()));
             txtProfissao.setText(isEmpty(paciente.getProfissao()));
-            txtAnotacao.setText(isEmpty(paciente.getAnotacao()));
+            txaAnotacao.setText(isEmpty(paciente.getAnotacao()));
             cbGenero.setSelectedItem(paciente.getGenero());
             cbEstadoCivil.setSelectedItem(paciente.getEstado_civil());
             
@@ -558,11 +547,11 @@ public class EditarPacientes extends javax.swing.JFrame {
                 }
                 enderecoDao.desconectar();
             }else{
-                JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados de endereço");
+                JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
             }
             cadastroDao.desconectar();
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possivel conectar ao banco de dados de usuario");
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }    
         
@@ -609,13 +598,13 @@ public class EditarPacientes extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbEstadoCivil;
     private javax.swing.JComboBox<String> cbGenero;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel imgFundo;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jcNascimento;
     private javax.swing.JLabel lblDadosAdicionais;
     private javax.swing.JLabel lblDadosBasicos;
     private javax.swing.JLabel lblDadosContato;
-    private javax.swing.JTextArea txtAnotacao;
+    private javax.swing.JTextArea txaAnotacao;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCep;
     private javax.swing.JTextField txtCidade;

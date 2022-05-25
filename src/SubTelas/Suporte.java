@@ -33,6 +33,7 @@ public class Suporte extends javax.swing.JFrame {
         btnRecuperar = new javax.swing.JButton();
         lblimg = new javax.swing.JLabel();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Suporte");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
