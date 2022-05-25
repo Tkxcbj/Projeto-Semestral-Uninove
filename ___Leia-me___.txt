@@ -1,0 +1,1 @@
+as bibliotecas necessarias estão em 'dist\lib'
